@@ -28,7 +28,7 @@ class AsyncForm {
   registerEvents() {
     this.element.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this.element.submit();
+      this.submit();
     });
   }
 
