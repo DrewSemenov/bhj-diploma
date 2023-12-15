@@ -40,7 +40,9 @@ class User {
       method: 'GET',
       data: User.current(),
       callback: (err, response) => {
-        response.success ? User.setCurrent(response.user) : User.unsetCurrent();
+        response?.success
+          ? User.setCurrent(response.user)
+          : User.unsetCurrent();
 
         callback(err, response);
       },

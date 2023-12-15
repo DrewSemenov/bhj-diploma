@@ -10,17 +10,19 @@ const createRequest = async (options = {}) => {
     responseType: 'json',
   };
 
-  const arrayFromData = Object.entries(options.data);
+  if (options.data) {
+    const arrayFromData = Object.entries(options.data);
 
-  if (options.method === 'GET') {
-    sendData.url += arrayFromData
-      .reduce((acc, [key, value]) => acc + `${key}=${value}&`, '?')
-      .slice(0, -1);
-  }
+    if (options.method === 'GET') {
+      sendData.url += arrayFromData
+        .reduce((acc, [key, value]) => acc + `${key}=${value}&`, '?')
+        .slice(0, -1);
+    }
 
-  if (options.method === 'POST') {
-    sendData.body = new FormData();
-    arrayFromData.forEach(([key, value]) => sendData.body.append(key, value));
+    if (options.method === 'POST') {
+      sendData.body = new FormData();
+      arrayFromData.forEach(([key, value]) => sendData.body.append(key, value));
+    }
   }
 
   const sendRequest = async ({ url, method, body, responseType }) =>
@@ -30,10 +32,15 @@ const createRequest = async (options = {}) => {
       responseType,
     });
 
-  const response = await sendRequest(sendData);
-  console.log(
-    '🚀 ~ file: createRequest.js:34 ~ createRequest ~ response:',
-    response
-  );
+  try {
+    const response = await sendRequest(sendData);
+    console.log(
+      '🚀 ~ file: createRequest.js:37 ~ createRequest ~ response:',
+      response
+    );
+    options.callback(_, response);
+  } catch (error) {
+    options.callback(error);
+  }
 };
 
