@@ -197,6 +197,22 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
+    },
+    {
+      "id": "4mvavslq85ocbx",
+      "type": "income",
+      "name": "Андрей",
+      "sum": 12,
+      "user_id": "4mvdz4lq7x2pv8",
+      "created_at": "2023-12-16T14:30:49.964Z"
+    },
+    {
+      "id": "4mvdz8lq85opk4",
+      "type": "income",
+      "name": "Андрей",
+      "sum": 12,
+      "user_id": "4mvdz4lq7x2pv8",
+      "created_at": "2023-12-16T14:31:07.107Z"
     }
   ]
 }
