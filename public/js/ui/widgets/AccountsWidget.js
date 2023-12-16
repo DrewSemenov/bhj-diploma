@@ -40,6 +40,7 @@ class AccountsWidget {
     this.element.addEventListener('click', (evt) => {
       const account = evt.target.closest('.account');
       if (!account) return;
+
       this.onSelectAccount(account);
     });
   }

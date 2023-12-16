@@ -5,14 +5,21 @@
  * */
 
 class TransactionsWidget {
+  buttonIncome = document.querySelector('.create-income-button');
+  buttonExpense = document.querySelector('.create-expense-button');
   /**
    * Устанавливает полученный элемент
    * в свойство element.
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
+  constructor(element) {
+    if (!element) {
+      throw new Error('Передан пустой элемент');
+    }
 
+    this.element = element;
+    this.registerEvents();
   }
   /**
    * Регистрирует обработчики нажатия на
@@ -21,6 +28,13 @@ class TransactionsWidget {
    * экземпляра окна
    * */
   registerEvents() {
+    this.buttonIncome.addEventListener('click', () =>
+      App.getModal('newIncome').open()
+    );
 
+    this.buttonExpense.addEventListener('click', () =>
+      App.getModal('newExpense').open()
+    );
   }
 }
+
