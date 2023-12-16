@@ -195,7 +195,7 @@ class App {
   }
 
   /**
-   * Вызвает метод update() у виджетов
+   * Вызывает метод update() у виджетов
    * accounts и user
    * */
   static updateWidgets() {
