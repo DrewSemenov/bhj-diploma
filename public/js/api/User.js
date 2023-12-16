@@ -27,7 +27,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    return JSON.parse(localStorage.getItem('user')) ?? null;
+    return localStorage.getItem('user') ?? null;
   }
 
   /**
@@ -59,10 +59,9 @@ class User {
     createRequest({
       url: this.URL + '/login',
       method: 'POST',
-      responseType: 'json',
       data,
       callback: (err, response) => {
-        if (response.success) {
+        if (response?.success) {
           this.setCurrent(response.user);
         }
         callback(err, response);
@@ -80,7 +79,6 @@ class User {
     createRequest({
       url: this.URL + '/register',
       method: 'POST',
-      responseType: 'json',
       data,
       callback: (err, response) => {
         if (response.success) {
@@ -99,8 +97,7 @@ class User {
     createRequest({
       url: this.URL + '/logout',
       method: 'POST',
-      responseType: 'json',
-      data,
+      data: null,
       callback: (err, response) => {
         if (response.success) {
           this.setCurrent(response.user);

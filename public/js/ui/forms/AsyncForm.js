@@ -40,7 +40,10 @@ class AsyncForm {
    * }
    * */
   getData() {
-    const inputs = [...this.element.elements];
+    const inputs = [...this.element.elements].filter(
+      (input) => input.tagName === 'INPUT'
+    );
+
     return inputs.reduce(
       (acc, input) => ({ ...acc, [input.name]: input.value }),
       {}

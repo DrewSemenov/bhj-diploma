@@ -12,7 +12,6 @@ const createRequest = async (options = {}) => {
 
   if (options.data) {
     const arrayFromData = Object.entries(options.data);
-
     if (options.method === 'GET') {
       sendData.url += arrayFromData
         .reduce((acc, [key, value]) => acc + `${key}=${value}&`, '?')
@@ -25,7 +24,7 @@ const createRequest = async (options = {}) => {
     }
   }
 
-  const sendRequest = async ({ url, method, body, responseType }) =>
+  const sendRequest = ({ url, method, body, responseType }) =>
     fetch(url, {
       method,
       body,
@@ -34,13 +33,10 @@ const createRequest = async (options = {}) => {
 
   try {
     const response = await sendRequest(sendData);
-    console.log(
-      '🚀 ~ file: createRequest.js:37 ~ createRequest ~ response:',
-      response
-    );
-    options.callback(_, response);
-  } catch (error) {
-    options.callback(error);
+    const responseData = await response.json();
+    options.callback(null, responseData);
+  } catch (err) {
+    options.callback(err);
   }
 };
 
