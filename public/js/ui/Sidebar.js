@@ -37,6 +37,31 @@ class Sidebar {
    * При нажатии на кнопку выхода вызывает User.logout и по успешному
    * выходу устанавливает App.setState( 'init' )
    * */
-  static initAuthLinks() {}
+  static initAuthLinks() {
+    const sidebarMenu = document.querySelector('.sidebar-menu');
+
+    sidebarMenu.addEventListener('click', (evt) => {
+      const button = evt.target.closest('li.menu-item');
+      if (!button) return;
+
+      evt.preventDefault();
+
+      const buttonName = [...button.classList]
+        .filter((className) => className.match('_'))[0]
+        .split('_')[1];
+
+      if (buttonName !== 'logout') {
+        App.getModal(buttonName).open();
+      }
+
+      if (buttonName === 'logout') {
+        User.logout((err, response) => {
+          if (response.success) {
+            App.setState('init');
+          }
+        });
+      }
+    });
+  }
 }
 
