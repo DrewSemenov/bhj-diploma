@@ -24,8 +24,8 @@ class Sidebar {
     buttonMenuToggle.addEventListener('click', (evt) => {
       evt.preventDefault();
 
-      ['sidebar-open', 'sidebar-collapse'].forEach((cls) =>
-        sidebarMini.classList.toggle(cls)
+      ['sidebar-open', 'sidebar-collapse'].forEach((className) =>
+        sidebarMini.classList.toggle(className)
       );
     });
   }
