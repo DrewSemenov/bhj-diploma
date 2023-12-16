@@ -41,7 +41,7 @@ class AsyncForm {
    * */
   getData() {
     const inputs = [...this.element.elements].filter(
-      (input) => input.tagName === 'INPUT'
+      (element) => element.tagName === 'INPUT'
     );
 
     return inputs.reduce(
@@ -58,6 +58,21 @@ class AsyncForm {
    * */
   submit() {
     this.onSubmit(this.getData());
+    this.element.reset();
+  }
+
+  showError(err) {
+    if (this.timerId) {
+      this.timerId = null;
+    }
+
+    const div = document.createElement('div');
+    div.textContent = err;
+    div.style.color = 'red';
+
+    this.element.append(div);
+
+    this.timerId = setTimeout(() => div.remove(), 1000);
   }
 }
 

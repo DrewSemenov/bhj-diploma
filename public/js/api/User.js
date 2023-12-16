@@ -61,7 +61,7 @@ class User {
       method: 'POST',
       data,
       callback: (err, response) => {
-        if (response?.success) {
+        if (response.success) {
           this.setCurrent(response.user);
         }
         callback(err, response);

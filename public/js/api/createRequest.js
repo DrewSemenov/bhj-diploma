@@ -34,9 +34,12 @@ const createRequest = async (options = {}) => {
   try {
     const response = await sendRequest(sendData);
     const responseData = await response.json();
-    options.callback(null, responseData);
+
+    responseData.success
+      ? options.callback(null, responseData)
+      : options.callback(responseData.error, responseData);
   } catch (err) {
-    options.callback(err);
+    throw new Error(err);
   }
 };
 
