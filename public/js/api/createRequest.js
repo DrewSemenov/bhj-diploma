@@ -18,7 +18,7 @@ const createRequest = async (options = {}) => {
         .slice(0, -1);
     }
 
-    if (options.method === 'POST') {
+    if (options.method === 'POST' || options.method === 'PUT') {
       sendData.body = new FormData();
       arrayFromData.forEach(([key, value]) => sendData.body.append(key, value));
     }
