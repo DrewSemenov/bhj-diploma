@@ -5,12 +5,6 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1"
-    },
-    {
-      "name": "Андрей",
-      "email": "123@123",
-      "password": "1",
-      "id": "4mvavslq8kj6pi"
     }
   ],
   "accounts": [
@@ -28,16 +22,6 @@
       "name": "Бизнес",
       "user_id": "1",
       "id": "3"
-    },
-    {
-      "name": "MediaRoom",
-      "user_id": "4mvavslq8kj6pi",
-      "id": "4mv1vclq8on52b"
-    },
-    {
-      "name": "Андрей",
-      "user_id": "4mvavslq8kj6pi",
-      "id": "4mv7xslq8ow1n4"
     }
   ],
   "transactions": [
@@ -175,33 +159,7 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
-    },
-    {
-      "id": "4mvexslq8on9py",
-      "type": "income",
-      "name": "Андрей",
-      "sum": 100,
-      "account_id": "4mv1vclq8on52b",
-      "user_id": "4mvavslq8kj6pi",
-      "created_at": "2023-12-16T23:21:52.629Z"
-    },
-    {
-      "id": "4mvet4lq8ow5or",
-      "type": "income",
-      "name": "12",
-      "sum": 12,
-      "account_id": "4mv1vclq8on52b",
-      "user_id": "4mvavslq8kj6pi",
-      "created_at": "2023-12-16T23:28:47.307Z"
-    },
-    {
-      "id": "4mv3rglq8owbm4",
-      "type": "income",
-      "name": "Андрей",
-      "sum": 100,
-      "account_id": "4mv7xslq8ow1n4",
-      "user_id": "4mvavslq8kj6pi",
-      "created_at": "2023-12-16T23:28:54.987Z"
     }
   ]
 }
+

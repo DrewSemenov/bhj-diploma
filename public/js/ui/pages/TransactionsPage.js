@@ -25,7 +25,7 @@ class TransactionsPage {
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-    this.render(this.lastOptions);
+    this.render();
   }
 
   /**
@@ -61,7 +61,6 @@ class TransactionsPage {
    * */
   removeAccount() {
     if (!this.lastOptions) return;
-
     if (!confirm('Вы действительно хотите удалить счет?')) return;
 
     const id = this.lastOptions.account_id;
@@ -69,12 +68,11 @@ class TransactionsPage {
     Account.remove({ id }, (err, response) => {
       if (err) return;
       if (response.success) {
-        App.updateWidgets();
-        App.updateForms();
         App.update();
+        this.renderTransactions([]);
       }
+      this.clear();
     });
-    this.clear();
   }
 
   /**
@@ -83,7 +81,17 @@ class TransactionsPage {
    * По удалению транзакции вызовите метод App.update(),
    * либо обновляйте текущую страницу (метод update) и виджет со счетами
    * */
-  removeTransaction(id) {}
+  removeTransaction(id) {
+    if (id.length && !confirm('Вы действительно хотите удалить транзакцию?'))
+      return;
+
+    Transaction.remove({ id }, (err, response) => {
+      if (err) return;
+      if (response.success) {
+        App.update();
+      }
+    });
+  }
 
   /**
    * С помощью Account.get() получает название счёта и отображает
@@ -91,7 +99,7 @@ class TransactionsPage {
    * Получает список Transaction.list и полученные данные передаёт
    * в TransactionsPage.renderTransactions()
    * */
-  render(options) {
+  render(options = this.lastOptions) {
     if (!options) return;
 
     this.lastOptions = options;
@@ -101,12 +109,18 @@ class TransactionsPage {
       const data = response.data.filter(
         (item) => item.id === options.account_id
       )[0];
-      const accountName = data.name;
-      this.renderTitle(accountName);
+
+      if (!data) return;
+
+      this.renderTitle(data.name);
+
       Transaction.list(
         { ...data, account_id: options.account_id },
         (err, response) => {
-          this.renderTransactions(response.data);
+          if (err) return;
+          if (response.success) {
+            this.renderTransactions(response.data);
+          }
         }
       );
     });
@@ -151,7 +165,7 @@ class TransactionsPage {
    * Формирует HTML-код транзакции (дохода или расхода).
    * item - объект с информацией о транзакции
    * */
-  getTransactionHTML({ id, type, sum, created_at }) {
+  getTransactionHTML({ id, type, sum, name, created_at }) {
     return `
     <div class="transaction transaction_${type} row">
     <div class="col-md-7 transaction__details">
@@ -159,7 +173,7 @@ class TransactionsPage {
           <span class="fa fa-money fa-2x"></span>
       </div>
       <div class="transaction__info">
-          <h4 class="transaction__title">Новый будильник</h4>
+          <h4 class="transaction__title">${name}</h4>
           <div class="transaction__date">${this.formatDate(created_at)}</div>
       </div>
     </div>
@@ -181,10 +195,9 @@ class TransactionsPage {
    * используя getTransactionHTML
    * */
   renderTransactions(data) {
-    this.content.innerHTML = data.reduce(
-      (acc, item) => acc + this.getTransactionHTML(item),
-      ''
-    );
+    this.content.innerHTML = !data.length
+      ? ''
+      : data.reduce((acc, item) => acc + this.getTransactionHTML(item), '');
   }
 }
 

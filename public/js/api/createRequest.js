@@ -13,7 +13,6 @@ const createRequest = async (options = {}) => {
   };
 
   let data = options.data;
-
   if (data) {
     const arrayFromData = Object.entries(data);
 
@@ -43,7 +42,7 @@ const createRequest = async (options = {}) => {
       ? options.callback(null, responseData)
       : options.callback(responseData.error, responseData);
   } catch (err) {
-    throw new Error(err);
+    console.error(new Error(err));
   }
 };
 
