@@ -41,7 +41,7 @@ class AsyncForm {
    * */
   getData() {
     const inputs = [...this.element.elements].filter(
-      (element) => element.tagName === 'INPUT'
+      (element) => element.tagName !== 'BUTTON'
     );
 
     return inputs.reduce(

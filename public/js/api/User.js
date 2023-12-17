@@ -28,7 +28,7 @@ class User {
    * */
   static current() {
     const user = localStorage.getItem('user');
-    return user ? JSON.parse(localStorage.getItem('user')) : null;
+    return user !== 'undefined' ? JSON.parse(user) : null;
   }
 
   /**
@@ -41,9 +41,7 @@ class User {
       method: 'GET',
       data: User.current(),
       callback: (err, response) => {
-        response?.success
-          ? User.setCurrent(response.user)
-          : User.unsetCurrent();
+        response.success ? User.setCurrent(response.user) : User.unsetCurrent();
 
         callback(err, response);
       },

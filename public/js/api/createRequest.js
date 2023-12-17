@@ -6,19 +6,24 @@ const createRequest = async (options = {}) => {
   const sendData = {
     url: options.url,
     method: options.method,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
     body: null,
-    responseType: 'json',
   };
 
-  if (options.data) {
-    const arrayFromData = Object.entries(options.data);
+  let data = options.data;
+
+  if (data) {
+    const arrayFromData = Object.entries(data);
+
     if (options.method === 'GET') {
       sendData.url += arrayFromData
         .reduce((acc, [key, value]) => acc + `${key}=${value}&`, '?')
         .slice(0, -1);
     }
 
-    if (options.method === 'POST' || options.method === 'PUT') {
+    if (options.method !== 'GET') {
       sendData.body = new FormData();
       arrayFromData.forEach(([key, value]) => sendData.body.append(key, value));
     }
@@ -34,7 +39,6 @@ const createRequest = async (options = {}) => {
   try {
     const response = await sendRequest(sendData);
     const responseData = await response.json();
-
     responseData.success
       ? options.callback(null, responseData)
       : options.callback(responseData.error, responseData);
